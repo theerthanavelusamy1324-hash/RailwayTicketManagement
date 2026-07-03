@@ -1,0 +1,285 @@
+<html>
+    <head>
+        <title>Dashboard</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <style>
+        .sidebar{
+            background:#191B30;
+            width:200px;
+            height:100vh;
+            position:fixed;
+        }
+        #logout{
+            border-color:white;
+            border-radius:10px;
+            margin-top:300px;
+            width:150px;
+        }
+        .buttons a:hover{
+            background:#453E36;
+            
+        }
+        .search{
+            margin-left:400px;
+        }
+        #activetrain{
+            margin-left:70px;
+        }
+          #scheduletrain{
+            margin-left:70px;
+        }
+          #activetickets{
+            margin-left:70px;
+        }
+          #drivers{
+            margin-left:70px;
+        }
+        #trainfront{
+            background:#FFFBE2;
+            font-size:20px;
+            padding:10px;
+            border-radius:20px;
+        }
+        #calendar{
+            background:#E7F3ED;
+             font-size:20px;
+            padding:10px;
+            border-radius:20px;
+        }
+        #ticket{
+            background:#DEFCFE;
+             font-size:20px;
+            padding:10px;
+            border-radius:20px;
+        }
+        #people{
+            background:#F4EEEA;
+             font-size:20px;
+            padding:10px;
+            border-radius:20px;
+        }
+        .card{
+            border-radius:20px;
+            border:none;
+        }
+       
+      </style>   
+    </head>
+    <body class="bg-light">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="sidebar p-3 text-center">
+                    <h3 class="text-warning"><i class="train-front"></i>Rail Vista</h3>
+                   <div class="buttons">
+                    <a href="dashboard.html" class="btn mt-3 text-white"><i class="bi bi-speedometer"></i> Dashboard</a>
+                    <a href="schedule.html" class="btn mt-3 text-white"><i class="bi bi-calendar"></i>   Schedule Train</a>
+                    <a href="addtrain.html" class="btn mt-3 text-white"><i class="bi bi-plus-circle"></i> Add Train/Driver</a>
+                    <a href="book.html" class="btn mt-3 text-white"><i class="bi bi-ticket"></i> Book Ticket</a>
+                     <a href="login.html" class="btn text-white" id="logout"><i class="bi bi-box-arrow-right"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="row mt-4">
+                    <div class="col">
+                <h3>Welcome Back,<span class="text-warning">Book Ticket</span></h3>
+                <p>Here's your railway overview</p>
+                </div>
+                 <div class="col">
+                    <h3 class="search">➕🔍</h3>
+                 </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <div class="card p-3">
+                            <div>
+                                <i class="bi bi-train-front text-warning" id="trainfront"></i>
+                                <span id="activetrain">0</span>
+                                <p class="text-center">Active Trains</p>
+                            </div>
+                           
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-3">
+                            <div>
+                                <i class="bi bi-calendar text-success" id="calendar"></i>
+                                <span id="scheduletrain">0</span>
+                                <p class="text-center">Schedules</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-3">
+                        <div class="card p-3">
+                            <div>
+                                <i class="bi bi-ticket text-primary" id="ticket"></i>
+                                <span id="activetickets">0</span>
+                                <p class="text-center">Active Tickets</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-3">
+                            <div>
+                                <i class="bi bi-people text-danger" id="people"></i>
+                                <span id="drivers">0</span>
+                                <p class="text-center">Drivers</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card p-3">
+                            <p>📊 Tickets per Train</p>
+                            <canvas id="barchart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-3">
+                        <p>🕛 Upcoming Departure</p>
+                        <div id="history"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card p-3 mt-4">
+                    <h5><i class="bi bi-list"></i>Recent Ticket Bookings</h5>
+                    <table class="table mt-3">
+                        <thead>
+                            <tr>
+                                <th>Train</th>
+                                 <th>Route</th>
+                                  <th>Passenger</th>
+                                   <th>Station</th>
+                                    <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablebody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            async function traincount() {
+                let response = await fetch(`http://localhost:8080/traincount`);
+                let traincount = await response.text();
+                document.getElementById("activetrain").innerHTML = traincount;
+                
+            }
+            traincount();
+            async function drivercount() {
+            let response = await fetch(`http://localhost:8080/drivercount`);
+            let drivercount = await response.text();
+            document.getElementById("drivers").innerHTML = drivercount;
+                
+            }
+            drivercount();
+            async function schedulecount() {
+                let response = await fetch(`http://localhost:8080/schedulecount`);
+                let schedulecount = await response.text();
+                document.getElementById("scheduletrain").innerHTML = schedulecount;
+                
+            }
+            schedulecount();
+            async function bookcount() {
+                let response = await fetch(`http://localhost:8080/bookcount`);
+                let bookcount = await response.text();
+                document.getElementById("activetickets").innerHTML = bookcount;
+                
+            }
+            bookcount();
+            
+            async function loadschedule() {
+                let response = await fetch(`http://localhost:8080/scheduledetails`);
+                let data = await response.json();
+             let his = "";
+             for(let d of data){
+             his +=`
+             <div class="row">
+                <div class="col">
+                    <p><b>${d.train}</b></p>
+                    <p>${d.source} → ${d.destination}</p>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-warning btn-sm">${d.arrivaltime}</button>
+                        </div>
+                    </div>
+                    `;
+                }
+                
+                    document.getElementById("history").innerHTML = his;
+                    
+            }
+            loadschedule();
+            let names = [];
+            let mumbaiexpress = 0;
+            let rajdhaniexpress = 0;
+            let kanyakumariexpress = 0;
+            let barchart;
+            async function loadtrain() {
+                let response = await fetch(`http://localhost:8080/bookdetails`);
+                let data = await response.json();
+                for(let n of data){
+                    names.push(n.schedulename);
+                    
+                    if(n.schedulename === "mumbaiexpress"){
+                        mumbaiexpress++;
+                    }
+                      if(n.schedulename === "rajdhaniexpress"){
+                        rajdhaniexpress++;
+                    }
+                      if(n.schedulename === "kanyakumariexpress"){
+                        kanyakumariexpress++;
+                    }
+                    if(barchart){
+                        barchart.destroy();
+                    }
+                  barchart = new Chart(document.getElementById("barchart"),{
+                        type:'bar',
+                        data:{
+                            labels:names,
+                            datasets:[{
+                                label:'bookings',
+                                data:[mumbaiexpress,kanyakumariexpress,rajdhaniexpress],
+                                backgroundColor:'yellow'
+                            }]
+                        }
+                    });
+
+                }
+                
+            }
+            loadtrain();
+            async function loadbookings() {
+            let bookingresponse = await fetch(`http://localhost:8080/recentbookings`);
+            let scheduleresponse = await fetch(`http://localhost:8080/scheduledetails`);
+            let bookings = await bookingresponse.json();
+            let schedules = await scheduleresponse.json();
+            console.log(schedules);
+            let row = "";
+            for(let booking of bookings){
+                let schedule = schedules.find(s => s.train === booking.schedulename);
+                row+=`
+                <tr>
+                    <td>${booking.schedulename}</td>
+                    <td>${schedule?.source} - ${schedule?.destination}</td>
+                    <td>${booking.passengername} - ${booking.passengerage}</td>
+                     <td>${booking.boarding}</td>
+                     <td><span class="badge bg-success">Booked</span></td>
+                     </tr>
+                     `;
+            }
+            document.getElementById("tablebody").innerHTML = row;
+                
+            }
+            loadbookings();
+           
+           
+          
+           
+        </script>
+    </body>
+</html>
