@@ -70,15 +70,7 @@ Add screenshots of:
 
 ---
 
-## 🚀 Future Enhancements
 
-- Online Payment Integration
-- Email Notifications
-- Ticket PDF Download
-- Seat Availability Chart
-- OTP Verification
-
----
 
 ## 👩‍💻 Author
 
