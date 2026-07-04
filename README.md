@@ -55,25 +55,9 @@ RailwayTicketManagement/
 
 ---
 
-## ⚙️ Installation
 
-1. Clone the repository
 
-```bash
-git clone <repository-link>
-```
 
-2. Open the project in IntelliJ IDEA or Eclipse.
-
-3. Create a MySQL database.
-
-4. Update the database configuration in `application.properties`.
-
-5. Run the Spring Boot application.
-
-6. Open the frontend in your browser.
-
----
 
 ## 📸 Screenshots
 
