@@ -5,10 +5,10 @@ A Java Full Stack web application that allows users to search trains, book railw
 ---
 
 ## 🔗 Live Demo
-https://your-project.vercel.app
+[https://your-project.vercel.app](https://theerthanavelusamy1324-hash.github.io/RailwayTicketManagement/)
 
 ## 💻 Source Code
-https://github.com/theerthanavelusamy1324-hash/RailwayTicketManagement
+[https://github.com/theerthanavelusamy1324-hash/RailwayTicketManagement](https://github.com/theerthanavelusamy1324-hash/RailwayTicketManagement)
 
 ---
 
