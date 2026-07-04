@@ -61,14 +61,23 @@ RailwayTicketManagement/
 
 ## 📸 Screenshots
 
-Add screenshots of:
-- Login Page
-- Home Page
-- Train Search
-- Booking Page
-- Admin Dashboard
+### Login Page
+![Login Page](screenshots/login%20page.jpg)
 
----
+### Sign Up Page
+![Sign Up Page](screenshots/signup%20page.jpg)
+
+### Dashboard
+![Dashboard](screenshots/dashboard%20page.jpg)
+
+### Add Train Page
+![Add Train Page](screenshots/add%20page.jpg)
+
+### Schedule Page
+![Schedule Page](screenshots/schedule%20page.jpg)
+
+### Book Ticket Page
+![Book Ticket Page](screenshots/book%20ticket%20page.jpg)
 
 
 
