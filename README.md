@@ -38,7 +38,7 @@ A Java Full Stack web application that allows users to search trains, book railw
 - VS Code
 - Git
 - GitHub
-- Postman
+
 
 ---
 
